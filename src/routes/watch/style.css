@@ -1,0 +1,33 @@
+.grid-container {
+  display: grid;
+  grid-template: "video recommendations" min-content
+                 "comments recommendations" 1fr / 3fr 1fr;
+
+  @media only screen and (max-width: 1024px) {
+  grid-template: "video recommendations" min-content
+                 "comments recommendations" 1fr / 2fr 1fr;
+
+  }
+
+  @media only screen and (max-width: 768px) {
+  grid-template: "video" "recommendations" "comments";
+  }
+
+  &.theater-mode {
+    grid-template: "video video" min-content
+                   "comments recommendations" 1fr / 2fr 1fr;
+  }
+
+}
+
+.video-player {
+  grid-area: video;
+}
+
+.comments {
+  grid-area: comments;
+}
+
+.recommendations {
+  grid-area: recommendations;
+}
