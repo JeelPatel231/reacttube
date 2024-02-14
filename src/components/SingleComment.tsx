@@ -9,7 +9,7 @@ export default function SingleComment(x: Comment & { videoId: string }) {
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div key={x.commentId} className="flex flex-row gap-4">
+    <div className="flex flex-row gap-4">
       <img src={x.authorThumbnails?.[0].url} className="h-10 rounded-full" />
       <div className="break-all">
         <div className="font-bold text-sm h-5">

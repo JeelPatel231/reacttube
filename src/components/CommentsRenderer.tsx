@@ -15,12 +15,13 @@ export default function CommentsRenderer({
   videoId, initialContinuation
 }: CommentsRendererProps) {
   const [pages, setPages] = useState<CommentResponse[]>([])
-  let continuation = pages[pages.length-1]?.continuation
-  if(pages.length == 0) {
+  let continuation = pages[pages.length - 1]?.continuation
+  if (pages.length == 0) {
     continuation = initialContinuation
   }
 
-  const comments = pages.flatMap(page => page.comments).map(comment => <SingleComment {...comment} videoId={videoId} />)
+  const comments = pages.flatMap(page => page.comments)
+    .map(comment => <SingleComment {...comment} key={comment.commentId} videoId={videoId} />)
 
   async function loadMoreComments() {
     // if pages are filled and continuation is null, i.e we reached the end 

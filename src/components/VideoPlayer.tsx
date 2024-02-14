@@ -22,11 +22,11 @@ export function VideoPlayer({
   ))
 
   useEffect(() => {
-    if(time && videoPlayerRef.current) videoPlayerRef.current.currentTime = time
-  },[])
+    if (time && videoPlayerRef.current) videoPlayerRef.current.currentTime = time
+  }, [time])
 
   return (
-    <video ref={videoPlayerRef} controls className={twMerge("w-full rounded-2xl aspect-video",className)}>
+    <video ref={videoPlayerRef} controls className={twMerge("w-full rounded-2xl aspect-video", className)}>
       {sourcesElement}
     </video>
   )

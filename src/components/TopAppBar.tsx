@@ -93,7 +93,12 @@ export default function TopAppBar() {
               onMouseEnter={() => setIsMouseInside(true)}
               onMouseLeave={() => setIsMouseInside(false)}
               className="absolute top-full w-full bg-white border-2 border-solid shadow-2xl rounded-2xl p-2 z-[1]">
-              {searchSuggestions.map(x => <SearchSuggestionEntry onClick={() => setIsMouseInside(false)} value={x} />)}
+              {searchSuggestions.map(x => <SearchSuggestionEntry onClick={() => {
+                if(inputRef.current != null){
+                  inputRef.current.value = x
+                }
+                setIsMouseInside(false)
+              }} value={x} />)}
             </div>
           }
 

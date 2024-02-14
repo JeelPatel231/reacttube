@@ -11,7 +11,7 @@ export default function SmallVideoComponent({
   author
 }: RecommendedVideos) {
   return (
-    <Link key={videoId} to={`/watch?v=${videoId}`} className="flex gap-2">
+    <Link to={`/watch?v=${videoId}`} className="flex gap-2">
       <PulsatingImage
         className="shrink-0 basis-32 h-full"
         src={InvidiousAPI.getVideoThumbnailUrl(videoId)}
