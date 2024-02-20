@@ -8,15 +8,12 @@ import { useEffect, useState } from "react";
 
 export default function VideoSearchResultComponent({
   title,
-  videoThumbnails,
   videoId,
   viewCount,
   publishedText,
   author,
   authorId,
-  authorUrl,
   descriptionHtml,
-  lengthSeconds,
 }: VideoSearchResult) {
   const thumbnail = InvidiousAPI.getVideoThumbnailUrl(videoId)
   const [authorThumbnail, setAuthorThumbnail] = useState<string>()

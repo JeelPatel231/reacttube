@@ -1,9 +1,14 @@
 "use client"
 
 import { InvidiousAPI } from "../lib/Invidious"
-import { DependencyList, useEffect, useRef, useState } from "react"
+import { DependencyList, lazy, useEffect, useRef, useState } from "react"
 import PillButton from "./PillButtons"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../store"
+import { logout } from "../store/user"
+
+const SearchSuggestionEntry = lazy(() => import("./SearchSuggestionEntry"))
 
 const useDebounce = (callback: () => void, timeout: number, depArray?: DependencyList) => {
   useEffect(() => {
@@ -18,12 +23,6 @@ const onEscape = function (action: () => void) {
   return () => window.removeEventListener('keydown', handler)
 };
 
-function SearchSuggestionEntry({ value, onClick }: { value: string, onClick: () => void }) {
-  return (
-    <Link onClick={onClick} to={`/results?search_query=${value}`} key={value} className="block transition-colors rounded-full px-2 hover:muted hover:bg-gray-200 text-lg">{value}</Link>
-  )
-}
-
 
 export default function TopAppBar() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -33,7 +32,10 @@ export default function TopAppBar() {
   const inputRef = useRef<HTMLInputElement>(null)
   const thisElementRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+  const location = useLocation()
 
+  const user = useSelector((state: RootState) => state.user.value)
+  const dispatch = useDispatch()
 
   const getSuggestions = async () => {
     if (searchQuery === "") return setSearchSuggestions([])
@@ -94,7 +96,7 @@ export default function TopAppBar() {
               onMouseLeave={() => setIsMouseInside(false)}
               className="absolute top-full w-full bg-white border-2 border-solid shadow-2xl rounded-2xl p-2 z-[1]">
               {searchSuggestions.map(x => <SearchSuggestionEntry onClick={() => {
-                if(inputRef.current != null){
+                if (inputRef.current != null) {
                   inputRef.current.value = x
                 }
                 setIsMouseInside(false)
@@ -105,6 +107,17 @@ export default function TopAppBar() {
         </span>
         <PillButton onClick={navigateToResults} className="material-symbols-outlined">search</PillButton>
       </span>
-    </div>
+      <span className="ml-auto">
+        {!user && location.pathname != '/login' &&
+          <PillButton onClick={() => navigate('/login')}>login</PillButton>
+        }
+        {user &&
+          <>
+            {user.fullName}
+            <PillButton className="inline ml-2" onClick={() => dispatch(logout())}>logout</PillButton>
+          </>
+        }
+      </span>
+    </div >
   )
 }

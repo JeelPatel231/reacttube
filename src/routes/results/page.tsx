@@ -1,10 +1,12 @@
 import { InvidiousAPI } from "../../lib/Invidious"
-import VideoSearchResultComponent from "./components/VideoSearchResult";
-import ChannelSearchResultComponent from "./components/ChannelSearchResult";
-import PlaylistSearchResultComponent from "./components/PlaylistSearchResult";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { SearchResults } from "../../lib/types/SearchResultsResponse";
+
+
+const VideoSearchResultComponent = lazy(() => import("./components/VideoSearchResult"));
+const ChannelSearchResultComponent = lazy(() => import("./components/ChannelSearchResult"));
+const PlaylistSearchResultComponent = lazy(() => import("./components/PlaylistSearchResult"));
 
 export default function ResultsPage() {
   const navigate = useNavigate()
@@ -22,9 +24,9 @@ export default function ResultsPage() {
     <div className="flex flex-col gap-8 p-4 lg:p-6 max-w-screen-md">
       {
         data.map((entry) => {
-          if (entry.type === 'video') return (<VideoSearchResultComponent {...entry} />)
-          if (entry.type === 'channel') return (<ChannelSearchResultComponent {...entry} />)
-          if (entry.type === 'playlist') return (<PlaylistSearchResultComponent {...entry} />)
+          if (entry.type === 'video') return (<VideoSearchResultComponent key={entry.videoId} {...entry} />)
+          if (entry.type === 'channel') return (<ChannelSearchResultComponent key={entry.authorId} {...entry} />)
+          if (entry.type === 'playlist') return (<PlaylistSearchResultComponent key={entry.playlistId} {...entry} />)
         })
       }
     </div>

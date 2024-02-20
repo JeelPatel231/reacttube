@@ -1,8 +1,10 @@
-import { useState } from "react";
-import VideoCard from "../components/VideoCard";
+import { lazy, useState } from "react";
 import { InvidiousAPI } from "../lib/Invidious";
 import { useOnMount } from "../lib/OnMount";
 import { TrendingResponseVideo } from "../lib/types/TrendingResponse";
+
+
+const VideoCard = lazy(() => import("../components/VideoCard"));
 
 export default function Home() {
   const [data, setData] = useState<TrendingResponseVideo[]>([])

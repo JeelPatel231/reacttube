@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { VideoResponse } from "../lib/types/VideoResponse";
 import PillButton from "./PillButtons";
 

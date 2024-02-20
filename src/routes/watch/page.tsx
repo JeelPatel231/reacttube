@@ -1,12 +1,13 @@
 import { InvidiousAPI } from "../../lib/Invidious";
 import "./style.css"
-import SmallVideoComponent from "../../components/SmallVideoRecommendations";
-import DescriptionBox from "../../components/DescriptionBox";
-import CommentsRenderer from "../../components/CommentsRenderer";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { VideoResponse } from "../../lib/types/VideoResponse";
 import { VideoPlayer } from "../../components/VideoPlayer";
+
+const SmallVideoComponent = lazy(() => import("../../components/SmallVideoRecommendations"));
+const DescriptionBox = lazy(() => import("../../components/DescriptionBox"));
+const CommentsRenderer = lazy(() => import("../../components/CommentsRenderer"));
 
 function compareiTag(tag1: string, tag2: string): number {
   return parseInt(tag1) - parseInt(tag2)
